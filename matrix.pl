@@ -55,6 +55,13 @@ pointwise([Col0|Cols], Op, Scalar, [ResCol0|ResCols]) :-
     maplist({Op, Scalar}/[E, Eres]>>expr(Op, E, Scalar, Eres), Col0, ResCol0),
     pointwise(Cols, Op, Scalar, ResCols).
 
+sum1(ACol, BCol, RCol) :-
+	maplist({}/[A, B, R]>>expr(#+, A, B, R), ACol, BCol, RCol).
+
+sum([], [], []).
+sum(ACols, BCols, RCols) :-
+    maplist(sum1, ACols, BCols, RCols).
+
 dot([An], [Bn], Res) :-
 	Res #= An*Bn.
 dot([A0|As], [B0|Bs], Res) :-
