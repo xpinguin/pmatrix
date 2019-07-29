@@ -30,10 +30,13 @@ identity(1, [[1]]).
 identity(2, [[1,0],[0,1]]).
 identity(3, [[1,0,0],[0,1,0],[0,0,1]]).
 identity(4, [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]).
-  
-zeros(Nrect, M0) :-
-    identity(Nrect, M1),
-    pointwise(M1, #*, 0, M0).
+
+zeros1(N, [ZerosCol]) :-
+	length(ZerosCol, N),
+	maplist({}/[E]>>(E #= 0), ZerosCol).
+zeros(Nrect, Cols) :-
+	length(Cols, Nrect),
+	maplist({Nrect}/[Col]>>zeros1(Nrect, [Col]), Cols).
  
 expr(#*, X, Y, Res) :- Res #= X*Y.
 expr(#+, X, Y, Res) :- Res #= X+Y.
