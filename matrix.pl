@@ -1,10 +1,10 @@
 :- encoding(utf8).
+
 :- use_module(library(clpfd)).
 :- use_module(library(yall)).
+
 %:- use_module(library(dcg/basics)).
-
 %:- set_prolog_flag(double_quotes, string).
-
 % TODO: use `phrase` (DCG) 
 
 matrix_cols([ColN], [ColN]).
@@ -12,11 +12,6 @@ matrix_cols(M, [Col0|ColsB]) :-
     M = [Col0|ColsA],
     matrix_cols([ColsA], [ColsB]).
 	
-
-%all_empty([[]]).
-%all_empty([[]|Es]) :- all_empty(Es).
-%matrix_rows([[]|RowEnds], []) :- all_empty(RowEnds), !.
-
 matrix_rows(Cols, [TrRowN]) :-
 	maplist({}/[Col, ColEN]>>(Col=[ColEN]), Cols, TrRowN).
 matrix_rows(Cols, [TrRow0|Rs1_N]) :-
@@ -30,13 +25,6 @@ matrix_fmt(M) :-
 transpose(M, Mt) :-
 	%clpfd:transpose(M, Mt).
 	matrix_rows(Mt, M).
-
-%matrix_ij([[Col0E0|_]|_], 0, 0, Col0E0).
-%matrix_ij([[_|_],[Col1E0|_]|_], 1, 0, Col1E0).
-%matrix_ij([[_, Col0E1|_]|_], 0, 1, Col0E1).
-%matrix_ij([[_|_],[_, Col1E1|_]|_], 1, 1, Col1E1).
-%matrix_ij(M, I, J, Eij) :-
-%    false.
 	
 identity(1, [[1]]).
 identity(2, [[1,0],[0,1]]).
